@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "blockchain-web"
+version = "0.1.0"
+description = "how to create blockchain_web demo by flask"
+authors = ["pi"]
+license = "mit"
+readme = "README.md"
+packages = [{include = "blockchain_web"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.group.dev.dependencies]
+Flask = "^3.0.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
