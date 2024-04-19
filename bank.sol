@@ -9,20 +9,24 @@ contract Bank{
 
 
     function  getBal() public view returns (uint){
-        return address(msg.sender).balance;
+        return bals[msg.sender];
     }
 
     function withdraw(uint amount) public payable {
         require(amount <= bals[msg.sender], "Not enough ");
-        bals[msg.sender]-=msg.value;
-        ( bool sent,) = msg.sender.call{value: msg.value}("----");
+        bals[msg.sender]-=amount;
+        ( bool sent,) = msg.sender.call{value: amount}("----");
         require(sent, "Failed to send Ether");
 
     }
 
-    receive() external payable {
+    function deposit() public payable {
+        updateTop3();
         bals[msg.sender]+=msg.value;
-        updateTop3() ;
+    }
+
+    receive() external payable {
+        deposit();
     }
 
     function updateTop3() public {
@@ -30,7 +34,7 @@ contract Bank{
            // 检查新分数是否应该进入前三
         for (int i = 2; i >= 0; i--) {
             if (bals[msg.sender] > bals[top3[uint(i)]]) {
-                insertIndex = i;  // 更新位置
+                     insertIndex = i;  // 更新位置
             } else {
                 break;
             }
