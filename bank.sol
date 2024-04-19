@@ -22,6 +22,7 @@ contract Bank{
 
     receive() external payable {
         bals[msg.sender]+=msg.value;
+        updateTop3() ;
     }
 
     function updateTop3() public {
