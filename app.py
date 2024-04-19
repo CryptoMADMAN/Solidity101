@@ -68,6 +68,7 @@ def full_chain():
 
 @app.route('/nodes/register', methods=['POST'])
 def register_nodes():
+    print(f" list(blockchain.nodes):{list(blockchain.nodes)}")
     values = request.get_json()
 
     nodes = values.get('nodes')
@@ -102,5 +103,8 @@ def consensus():
     return jsonify(response), 200
 
 
+# if __name__ == '__main__':
+#     app.run(host='0.0.0.0', port=5001)
+#
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5001)
+    app.run(host='0.0.0.0', port=5000)
