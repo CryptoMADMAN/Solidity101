@@ -22,6 +22,7 @@ contract Bank {
         require(amt < bals[msg.sender], "Not enough ");
         bals[msg.sender]-=amt;
         ( bool sent,) = msg.sender.call{value: amt}("");
+        // payable(msg.sender).transfer(amt);
         require(sent, "Failed to send Ether");
     }
 
@@ -49,7 +50,7 @@ contract Bank {
 }
 
 
-contract Ownable {
+abstract contract  Ownable {
     address public owner;
 
     event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
@@ -83,7 +84,7 @@ contract BigBank is Bank,Ownable {
         return bals[msg.sender];
     }
 
-    function withdraw() public onlyOwner payable {
+    function withdraw() public onlyOwner {
         payable(msg.sender).transfer(address(this).balance);
 
     }
